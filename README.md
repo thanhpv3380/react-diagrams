@@ -8,5 +8,4 @@ that shows how to get started with the library.
 It contains an example of how to implement a custom node in both Vanilla ES6 as-well
 as typescript (the recommended way).
 
-Simply run `yarn start` which will also open your browser.
-
+Simply run `npm install && npm start` which will also open your browser.
