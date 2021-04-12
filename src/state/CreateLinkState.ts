@@ -2,7 +2,10 @@ import { MouseEvent, KeyboardEvent } from 'react';
 import { Action, ActionEvent, InputType, State } from '@projectstorm/react-canvas-core';
 import { PortModel, LinkModel, DiagramEngine } from '@projectstorm/react-diagrams-core';
 
-import { TSCustomSelectNodeModel as TSCustomNodeSelectModel } from './custom-node-ts/custom-node-select/CustomNodeModel';
+import { MenuNodeModel } from '../node/MenuNode/MenuNodeModel';
+import { ActionNodeModel } from '../node/ActionNode/ActionNodeModel'
+import { DefaultPortModel, PathFindingLinkModel } from '@projectstorm/react-diagrams';
+import { AdvancedLinkModel, AdvancedPortModel } from '../link';
 /**
  * This state is controlling the creation of a link.
  */
@@ -26,7 +29,7 @@ export class CreateLinkState extends State<DiagramEngine> {
 					const ox = this.engine.getModel().getOffsetX();
 					const oy = this.engine.getModel().getOffsetY();
 
-					const listPost = element.getParent()['ports'];
+					const listPost = element['ports'];
 					const portCurrentPort = (listPost && listPost['in']) || null;
 
 					if (element instanceof PortModel && !this.sourcePort) {
@@ -46,7 +49,7 @@ export class CreateLinkState extends State<DiagramEngine> {
 							this.eject();
 						}
 					} else if (element === this.link.getLastPoint()) {
-						const node4 = new TSCustomNodeSelectModel({ color: 'rgb(0,192,255)' });
+						const node4 = new MenuNodeModel({ color: 'rgb(0,192,255)' });
 						node4.setPosition(clientX - ox, clientY - oy);
 						const model = this.engine.getModel();
 						model.addNode(node4);
@@ -71,6 +74,8 @@ export class CreateLinkState extends State<DiagramEngine> {
 					console.log("link move");
 					if (!this.link) return;
 					const { event } = actionEvent;
+					console.log(event.pageX, event.pageY);
+
 					//console.log("move", event.clientX, event.clientY);
 					this.link.getLastPoint().setPosition(event.clientX, event.clientY);
 					this.engine.repaintCanvas();

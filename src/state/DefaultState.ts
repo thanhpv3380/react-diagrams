@@ -9,7 +9,8 @@ import {
 } from '@projectstorm/react-canvas-core';
 import { PortModel, DiagramEngine, DragDiagramItemsState } from '@projectstorm/react-diagrams-core';
 import { CreateLinkState } from './CreateLinkState';
-import { TSCustomSelectNodeModel } from './custom-node-ts/custom-node-select/CustomNodeModel';
+import { MenuNodeModel } from '../node/MenuNode/MenuNodeModel';
+import { CustomDiagramEngine } from "../CustomDiagramEngine";
 
 export class DefaultState extends State<DiagramEngine> {
 	dragCanvas: DragCanvasState;
@@ -46,7 +47,7 @@ export class DefaultState extends State<DiagramEngine> {
 					// click on item
 					else {
 						console.log("3");
-						if (!(element instanceof TSCustomSelectNodeModel)) {
+						if (!(element instanceof MenuNodeModel)) {
 							this.handleDeleteSelectNode();
 						}
 						//this.transitionWithEvent(this.createLink, event);
@@ -79,9 +80,10 @@ export class DefaultState extends State<DiagramEngine> {
 		const listNode = this.engine.getModel().getActiveNodeLayer().getModels();
 		const keys = Object.keys(listNode);
 		const lastNode = listNode[keys[keys.length - 1]];
-		if (lastNode instanceof TSCustomSelectNodeModel) {
+		if (lastNode instanceof MenuNodeModel) {
 			lastNode.remove();
 			this.engine.repaintCanvas();
 		}
 	}
 }
+
